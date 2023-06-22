@@ -86,6 +86,7 @@ int main(int argc, string argv[])
 
     // Keep holding runoffs until winner exists
     while (true)
+    //for (int qw = 0; qw < 1; qw++)
     {
         // Calculate votes given remaining candidates
         tabulate();
@@ -144,7 +145,61 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
+    //clearing the votes
+    for (int i = 0; i < voter_count; i++)
+    {
+        candidates[i].votes=0;
+    }
+
     // TODO
+    for (int i = 0; i < voter_count; i++)
+    {
+
+        /*int new=preferences[i][0];
+        if (candidates[new].eliminated==false)
+        {
+            candidates[new].votes++;
+        }*/
+
+        int s=0;
+        while (candidates[preferences[i][s]].eliminated==true)
+        {
+            s++;
+        }
+        int new=preferences[i][s];
+        candidates[new].votes++;
+    }
+
+    int minvot;
+    int tr;
+
+    for (tr = 0; tr < candidate_count; tr++)
+    {
+        if (candidates[tr].eliminated==false)
+        {
+            minvot=candidates[tr].votes;
+        }
+    }
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes<minvot)
+        {
+            if (candidates[i].eliminated==false)
+            {
+                minvot=candidates[i].votes;
+            }
+        }
+    }
+    for (int x = 0; x < candidate_count; x++)
+    {
+        if (candidates[x].votes==minvot)
+        {
+            candidates[x].eliminated=true;
+            //string nm=candidates[x].name;
+            //printf("3%s\n",nm);
+        }
+    }
     return;
 }
 
