@@ -170,7 +170,7 @@ void tabulate(void)
         candidates[new].votes++;
     }
 
-    int minvot;
+    /*int minvot;
     int tr;
 
     for (tr = 0; tr < candidate_count; tr++)
@@ -199,7 +199,7 @@ void tabulate(void)
             //string nm=candidates[x].name;
             //printf("3%s\n",nm);
         }
-    }
+    }*/
     return;
 }
 
@@ -222,20 +222,59 @@ bool print_winner(void)
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    // TODO
-    return 0;
+    int minvot;
+    int tr;
+
+    for (tr = 0; tr < candidate_count; tr++)
+    {
+        if (candidates[tr].eliminated==false)
+        {
+            minvot=candidates[tr].votes;
+        }
+    }
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes<minvot)
+        {
+            if (candidates[i].eliminated==false)
+            {
+                minvot=candidates[i].votes;
+            }
+        }
+    }
+    return minvot;
 }
 
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
     // TODO
-    return false;
+    for (int x = 0; x < candidate_count; x++)
+    {
+        if (candidates[x].eliminated==false)
+        {
+            if (candidates[x].votes!=min)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 // Eliminate the candidate (or candidates) in last place
 void eliminate(int min)
 {
     // TODO
+    for (int x = 0; x < candidate_count; x++)
+    {
+        if (candidates[x].votes==min)
+        {
+            candidates[x].eliminated=true;
+            //string nm=candidates[x].name;
+            //printf("3%s\n",nm);
+        }
+    }
     return;
 }
