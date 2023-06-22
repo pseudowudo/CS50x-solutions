@@ -207,6 +207,15 @@ void tabulate(void)
 bool print_winner(void)
 {
     // TODO
+    float half=(voter_count/2);
+    for (int x = 0; x < candidate_count; x++)
+    {
+        if (candidates[x].votes>half)
+        {
+            printf("%s\n",candidates[x].name);
+            return true;
+        }
+    }
     return false;
 }
 
